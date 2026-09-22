@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sistemas Difusos (Fuzzy Logic) | UNITEC</title>
+<style>
+  :root{
+    --unitec-red: #0033A0;
+    --unitec-red-dark: #002266;
+    --unitec-gray: #58595B;
+    --unitec-light-gray: #F4F4F5;
+    --unitec-black: #1A1A1A;
+    --bg: #ffffff;
+    --card-bg: #ffffff;
+    --border: #E5E1E1;
+    color-scheme: light;
+    --code-bg: #1E1E1E;
+    --code-text: #E8E8E8;
+    box-sizing: border-box;
+  }
+  html{ scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: #ffffff;
+    color: #000000;
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+  }
+  header.hero{
+    background: linear-gradient(135deg, var(--unitec-red) 0%, var(--unitec-red-dark) 100%);
+    color: #fff;
+    padding: 3rem 1.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    padding-top: calc(3rem + env(safe-area-inset-top, 0px));
+  }
+  header.hero::after{
+    content:"";
+    position:absolute; right:-60px; top:-60px;
+    width:220px; height:220px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.08);
+  }
+  header.hero::before{
+    content:"";
+    position:absolute; left:-40px; bottom:-80px;
+    width:180px; height:180px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .hero-inner{ max-width: 880px; margin: 0 auto; position: relative; z-index: 1; }
+  .eyebrow{
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 0.6rem;
+  }
+  h1{
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin: 0 0 0.5rem;
+    font-weight: 800;
+  }
+  .subtitle{
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.9);
+    max-width: 640px;
+  }
+  main{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2.2rem 1.5rem 4rem;
+  }
+  .section{
+    margin-bottom: 2.6rem;
+  }
+  .section-title{
+    display:flex;
+    align-items:center;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .step-number{
+    flex-shrink:0;
+    width: 2.1rem; height: 2.1rem;
+    border-radius: 50%;
+    background: var(--unitec-red);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800;
+    font-size: 0.95rem;
+  }
+  .section-title h2{
+    margin:0;
+    font-size: 1.3rem;
+    color: var(--unitec-red);
+    font-weight: 800;
+  }
+  p{ margin: 0.6rem 0; }
+  .card{
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--unitec-red);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    margin: 1rem 0;
+  }
+  ul{ padding-left: 1.3rem; }
+  li{ margin: 0.35rem 0; }
+  .term{
+    font-weight: 700;
+    color: var(--unitec-red-dark);
+  }
+  .pill-row{
+    display:flex; gap:0.6rem; flex-wrap:wrap; margin: 0.8rem 0;
+  }
+  .pill{
+    background: var(--unitec-light-gray);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--unitec-gray);
+  }
+  .flow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1.4rem 0;
+  }
+  .flow-step{
+    background: var(--unitec-red);
+    color:#fff;
+    padding: 0.7rem 1.1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-align:center;
+    min-width: 120px;
+  }
+  .flow-arrow{
+    color: var(--unitec-gray);
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  table{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+    overflow-x: auto;
+    display: block;
+  }
+  @media (min-width: 560px){ table{ display: table; } }
+  thead th{
+    background: var(--unitec-red);
+    color: #fff;
+    text-align:left;
+    padding: 0.6rem 0.8rem;
+  }
+  tbody td{
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:nth-child(even){ background: var(--unitec-light-gray); }
+  .formula{
+    background: var(--unitec-light-gray);
+    border: 1px dashed var(--unitec-red);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-family: 'Cambria Math', Cambria, serif;
+    font-size: 1.05rem;
+    text-align:center;
+    margin: 1rem 0;
+    overflow-x: auto;
+  }
+  .result-box{
+    background: var(--unitec-red);
+    color:#fff;
+    border-radius: 10px;
+    padding: 1.1rem 1.4rem;
+    text-align:center;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 1rem 0;
+  }
+  .result-box span{ font-size: 1.5rem; }
+  pre{
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 1.1rem 1.2rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    border: 1px solid #000;
+  }
+  code{
+    font-family: 'Consolas', 'Courier New', monospace;
+  }
+  .code-label{
+    display:inline-block;
+    background: var(--unitec-red);
+    color:#fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.25rem 0.7rem;
+    border-radius: 6px 6px 0 0;
+    margin-bottom: -1px;
+  }
+  .cmt{ color:#8fd18f; }
+  .kw{ color:#ff8fa3; font-weight:700;}
+  .str{ color:#ffd166; }
+  .num{ color:#8ec5ff; }
+  .fn{ color:#c9a4ff; }
+  .kv-table td:first-child{ font-weight:700; color: var(--unitec-red-dark); width: 40%; }
+  footer{
+    text-align:center;
+    padding: 1.6rem;
+    color: var(--unitec-gray);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  .note{
+    background: var(--unitec-light-gray);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.92rem;
+    color: var(--unitec-gray);
+    margin-top: 1rem;
+  }
+  .toc{
+    display:flex; flex-wrap:wrap; gap:0.5rem;
+    margin: 1.2rem 0 0;
+  }
+  .toc a{
+    text-decoration:none;
+    color: var(--unitec-red-dark);
+    background: var(--unitec-light-gray);
+    border:1px solid var(--border);
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">UNITEC · Inteligencia Artificial</div>
+    <h1>Sistemas Difusos (Fuzzy Logic)</h1>
+    <p class="subtitle">Cómo una computadora puede razonar con conceptos imprecisos como "algo frío" o "bastante caluroso", usando el control de velocidad de un ventilador inteligente como caso de estudio.</p>
+    <div class="toc">
+      <a href="#intro">Introducción</a>
+      <a href="#fuzzificacion">Fuzzificación</a>
+      <a href="#reglas">Reglas</a>
+      <a href="#inferencia">Inferencia</a>
+      <a href="#defuzzificacion">Defuzzificación</a>
+      <a href="#python">Código Python</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="section" id="intro">
+    <div class="section-title">
+      <div class="step-number">i</div>
+      <h2>¿Por qué lógica difusa?</h2>
+    </div>
+    <p>Un termostato binario tradicional se enciende o apaga de golpe al cruzar un valor fijo, por ejemplo a 24°C. Un <span class="term">sistema difuso (fuzzy system)</span> en cambio permite ajustar la salida de forma <span class="term">suave y gradual</span>, imitando cómo razonamos los humanos con categorías imprecisas: "está un poco caluroso", "hace bastante frío", etc.</p>
+    <p>El flujo estándar de todo sistema difuso tiene tres etapas:</p>
+    <div class="flow">
+      <div class="flow-step">Fuzzificación</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Inferencia</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Defuzzificación</div>
+    </div>
+    <div class="card">
+      <p><strong>Caso de estudio:</strong> control de velocidad de un ventilador inteligente según la temperatura ambiente.</p>
+    </div>
+  </section>
+
+  <section class="section" id="fuzzificacion">
+    <div class="section-title">
+      <div class="step-number">1</div>
+      <h2>Variables y conjuntos difusos (Fuzzificación)</h2>
+    </div>
+    <p>Convertimos lecturas numéricas exactas en términos lingüísticos, usando <span class="term">grados de pertenencia</span> entre 0 y 1 (a diferencia de la lógica clásica, donde algo es 100% verdadero o 100% falso).</p>
+
+    <p><strong>Entrada — Temperatura (°C):</strong></p>
+    <div class="pill-row">
+      <span class="pill">Fría — alta si T &lt; 18°C</span>
+      <span class="pill">Templada — alta cerca de 22°C</span>
+      <span class="pill">Calurosa — alta si T &gt; 26°C</span>
+    </div>
+
+    <p><strong>Salida — Velocidad del motor (%):</strong></p>
+    <div class="pill-row">
+      <span class="pill">Lenta (20%)</span>
+      <span class="pill">Media (50%)</span>
+      <span class="pill">Rápida (90%)</span>
+    </div>
+
+    <div class="note">Una misma temperatura puede pertenecer parcialmente a dos categorías a la vez — por ejemplo, 24°C puede ser "un poco templada" y "un poco calurosa" simultáneamente. Esa es la clave de la lógica difusa.</div>
+  </section>
+
+  <section class="section" id="reglas">
+    <div class="section-title">
+      <div class="step-number">2</div>
+      <h2>Base de reglas (IF–THEN)</h2>
+    </div>
+    <p>La lógica se define con reglas de sentido común o conocimiento experto:</p>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Condición (SI)</th><th>Conclusión (ENTONCES)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Temperatura es Fría</td><td>Velocidad es Lenta</td></tr>
+        <tr><td>2</td><td>Temperatura es Templada</td><td>Velocidad es Media</td></tr>
+        <tr><td>3</td><td>Temperatura es Calurosa</td><td>Velocidad es Rápida</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="inferencia">
+    <div class="section-title">
+      <div class="step-number">3</div>
+      <h2>Inferencia con un caso real</h2>
+    </div>
+    <p>Supongamos que el sensor mide <strong>24°C</strong>. Ese valor cae en una zona de transición entre dos categorías:</p>
+    <table class="kv-table">
+      <tbody>
+        <tr><td>Pertenece a Fría</td><td>μ = 0.0</td></tr>
+        <tr><td>Pertenece a Templada</td><td>μ = 0.6</td></tr>
+        <tr><td>Pertenece a Calurosa</td><td>μ = 0.4</td></tr>
+      </tbody>
+    </table>
+    <p>Las reglas activadas son:</p>
+    <ul>
+      <li><span class="term">Regla 2</span> (Templada → Media): se activa con fuerza <strong>0.6</strong></li>
+      <li><span class="term">Regla 3</span> (Calurosa → Rápida): se activa con fuerza <strong>0.4</strong></li>
+    </ul>
+  </section>
+
+  <section class="section" id="defuzzificacion">
+    <div class="section-title">
+      <div class="step-number">4</div>
+      <h2>Defuzzificación (salida numérica)</h2>
+    </div>
+    <p>Combinamos los resultados de las reglas activadas para obtener un único valor numérico, usando por ejemplo el método del <span class="term">promedio ponderado</span>:</p>
+    <div class="formula">
+      Velocidad = ( 0.6 × 50% + 0.4 × 90% ) ÷ ( 0.6 + 0.4 )<br>
+      Velocidad = ( 30 + 36 ) ÷ 1.0
+    </div>
+    <div class="result-box">Velocidad final: <span>66%</span></div>
+    <p>El ventilador no salta bruscamente entre niveles fijos: opera de forma suave al 66% de su capacidad, combinando proporcionalmente las reglas "templada" y "calurosa".</p>
+  </section>
+
+  <section class="section" id="python">
+    <div class="section-title">
+      <div class="step-number">5</div>
+      <h2>Implementación en Python (scikit-fuzzy)</h2>
+    </div>
+    <p>La librería <code>scikit-fuzzy</code> permite construir este mismo sistema de forma directa: se definen las variables, las funciones de pertenencia, las reglas, y la librería se encarga de la fuzzificación, inferencia y defuzzificación automáticamente.</p>
+
+    <span class="code-label">instalación (en una celda de Jupyter/Colab)</span>
+<pre><code><span class="cmt"># Solo la primera vez, para instalar la librería</span>
+<span class="fn">!pip</span> install scikit-fuzzy</code></pre>
+
+    <span class="code-label">python</span>
+<pre><code><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> skfuzzy <span class="kw">as</span> fuzz
+<span class="kw">from</span> skfuzzy <span class="kw">import</span> control <span class="kw">as</span> ctrl
+
+<span class="cmt"># 1. Definir las variables de entrada y salida (universos de discurso)</span>
+temp = ctrl.Antecedent(np.arange(<span class="num">10</span>, <span class="num">41</span>, <span class="num">1</span>), <span class="str">'temperatura'</span>)
+fan  = ctrl.Consequent(np.arange(<span class="num">0</span>, <span class="num">101</span>, <span class="num">1</span>), <span class="str">'velocidad'</span>)
+
+<span class="cmt"># 2. Funciones de pertenencia triangulares</span>
+temp[<span class="str">'fria'</span>]     = fuzz.trimf(temp.universe, [<span class="num">10</span>, <span class="num">10</span>, <span class="num">22</span>])
+temp[<span class="str">'templada'</span>] = fuzz.trimf(temp.universe, [<span class="num">18</span>, <span class="num">22</span>, <span class="num">26</span>])
+temp[<span class="str">'calurosa'</span>] = fuzz.trimf(temp.universe, [<span class="num">22</span>, <span class="num">40</span>, <span class="num">40</span>])
+
+fan[<span class="str">'lenta'</span>]  = fuzz.trimf(fan.universe, [<span class="num">0</span>, <span class="num">0</span>, <span class="num">50</span>])
+fan[<span class="str">'media'</span>]  = fuzz.trimf(fan.universe, [<span class="num">20</span>, <span class="num">50</span>, <span class="num">80</span>])
+fan[<span class="str">'rapida'</span>] = fuzz.trimf(fan.universe, [<span class="num">50</span>, <span class="num">100</span>, <span class="num">100</span>])
+
+<span class="cmt"># 3. Base de reglas IF-THEN</span>
+regla1 = ctrl.Rule(temp[<span class="str">'fria'</span>],     fan[<span class="str">'lenta'</span>])
+regla2 = ctrl.Rule(temp[<span class="str">'templada'</span>], fan[<span class="str">'media'</span>])
+regla3 = ctrl.Rule(temp[<span class="str">'calurosa'</span>], fan[<span class="str">'rapida'</span>])
+
+<span class="cmt"># 4. Construir el sistema de control y simularlo</span>
+sistema    = ctrl.ControlSystem([regla1, regla2, regla3])
+simulador  = ctrl.ControlSystemSimulation(sistema)
+
+<span class="cmt"># 5. Ejecutar con el caso real: 24°C</span>
+simulador.input[<span class="str">'temperatura'</span>] = <span class="num">24</span>
+simulador.compute()
+
+<span class="fn">print</span>(<span class="str">f"Velocidad calculada: {simulador.output['velocidad']:.1f}%"</span>)
+<span class="cmt"># Salida esperada: Velocidad calculada: 66.0%</span></code></pre>
+
+    <div class="note">
+      <strong>Para el alumno:</strong> prueba cambiar el valor de <code>simulador.input['temperatura']</code> por otros números (por ejemplo 15, 20 o 35) y observa cómo la velocidad de salida cambia de forma suave y continua, sin saltos bruscos. También puedes agregar <code>fan.view(sim=simulador)</code> al final para graficar la función de pertenencia activada.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  UNITEC · Material de apoyo — Curso de Inteligencia Artificial · Sistemas Difusos
+</footer>
+
+</body>
+</html>
