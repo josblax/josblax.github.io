@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gartner, Inc. — Perfil corporativo</title>
+<style>
+  :root{
+    --ink:#12203A;
+    --paper:#F3F5FA;
+    --card:#ffffff;
+    --line:#CDD6E3;
+    --accent:#0A4595;
+    --accent-soft:#E3ECF9;
+    --gold:#A9762F;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+  }
+  h1,h2,h3{ font-family:"Georgia","Iowan Old Style", serif; font-weight:400; color:var(--ink); }
+
+  .page{ max-width:880px; margin:0 auto; padding:32px 20px 80px; }
+
+  /* ---- Cover ---- */
+  .cover{
+    background:var(--ink);
+    color:var(--paper);
+    padding:44px 36px;
+    border-radius:16px;
+    margin-bottom:28px;
+  }
+  .cover .kicker{
+    font-size:13px; letter-spacing:.12em; text-transform:uppercase;
+    color:#9CC0EE; margin:0 0 12px;
+  }
+  .cover h1{ font-size:44px; color:#fff; margin:0 0 10px; line-height:1.15;}
+  .cover .sub{ font-size:16px; color:#CBD6E6; max-width:640px; margin:0 0 24px;}
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-size:12.5px; border:1px solid #2C4266; color:#DCE7F7;
+    padding:6px 14px; border-radius:20px; background:rgba(255,255,255,0.04);
+  }
+  .cover-meta{
+    display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:space-between; margin-top:28px;
+    border-top:1px solid #22375A; padding-top:14px; font-size:12px; color:#8FA3C2;
+  }
+
+  /* ---- Sections ---- */
+  .section{ background:var(--card); border-radius:14px; padding:28px 30px; margin:0 0 20px; box-shadow:0 1px 3px rgba(18,32,58,0.06); }
+  .section-head{ display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+  .num{
+    width:32px; height:32px; min-width:32px; border-radius:50%;
+    background:var(--accent); color:#fff; font-family:"Georgia",serif;
+    display:flex; align-items:center; justify-content:center; font-size:15px;
+  }
+  .section-head h2{ font-size:21px; margin:0; color:var(--ink); }
+  p{ margin:0 0 12px; }
+
+  ul, ol{ margin:8px 0 14px; padding-left:22px; }
+  li{ margin-bottom:5px; }
+
+  table{ width:100%; border-collapse:collapse; margin:10px 0 16px; font-size:14.5px; }
+  th{
+    background:var(--accent); color:#fff; text-align:left;
+    padding:9px 12px; font-weight:normal; font-size:13.5px;
+  }
+  td{ padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tr:nth-child(even) td{ background:#F7F9FC; }
+  table{ display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  table thead, table tbody{ width:100%; }
+
+  .callout{
+    background:var(--accent-soft); border-left:4px solid var(--accent);
+    padding:14px 18px; border-radius:8px; font-size:14.5px; color:#0C2A52; margin:10px 0 6px;
+  }
+  .callout b{ color:var(--accent); }
+
+  .gold-callout{
+    background:#FBF3E7; border-left:4px solid var(--gold);
+    padding:14px 18px; border-radius:8px; font-size:14.5px; color:#4A3411; margin:10px 0 6px;
+  }
+  .gold-callout b{ color:var(--gold); }
+
+  .tag{
+    display:inline-block; background:var(--accent-soft); color:#0A3A73;
+    padding:4px 11px; border-radius:14px; font-size:12.5px; margin:2px 4px 2px 0;
+  }
+
+  .quad-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0 6px; }
+  .quad{ border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+  .quad h4{ margin:0 0 6px; font-size:14.5px; color:var(--accent); font-family:"Georgia",serif; font-weight:bold; }
+  .quad p{ margin:0; font-size:13px; color:#3D4A5C; }
+
+  .hype-chart{ margin:16px 0 10px; }
+  .hype-bars{ display:flex; align-items:flex-end; gap:8px; height:100px; }
+  .hype-bar{ flex:1; background:var(--accent-soft); border-bottom:3px solid var(--accent); border-radius:6px 6px 0 0; }
+  .hype-labels{ display:flex; gap:8px; margin-top:8px; }
+  .hype-labels span{ flex:1; font-size:11px; color:#0A3A73; text-align:center; line-height:1.25; }
+
+  .steps{ counter-reset: step; list-style:none; padding-left:0; }
+  .steps li{
+    counter-increment: step; position:relative; padding-left:38px; margin-bottom:12px;
+  }
+  .steps li::before{
+    content: counter(step); position:absolute; left:0; top:1px;
+    width:24px; height:24px; border-radius:50%; background:var(--gold); color:#fff;
+    font-size:12px; display:flex; align-items:center; justify-content:center;
+  }
+
+  .closing{
+    background:var(--ink); color:var(--paper); border-radius:12px; padding:22px 24px; margin-top:16px;
+  }
+  .closing h3{ color:#fff; font-size:16px; margin:0 0 8px; }
+  .closing p{ color:#CBD6E6; font-size:14.5px; margin:0 0 10px; }
+
+  .footer-note{ font-size:12px; color:#7C879C; margin-top:28px; padding-top:14px; border-top:1px solid var(--line); max-width:880px; }
+
+  .toc{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; }
+  .toc a{
+    font-family:Arial, Helvetica, sans-serif; font-size:12.5px; color:#0A3A73;
+    background:var(--accent-soft); padding:6px 12px; border-radius:16px; text-decoration:none;
+  }
+  .toc a:hover{ background:#CFE0F5; }
+
+  @media (max-width: 640px){
+    .page{ padding:20px 14px 60px; }
+    .cover{ padding:32px 22px; }
+    .cover h1{ font-size:32px; }
+    .section{ padding:20px 18px; }
+    table{ font-size:13px; }
+    .quad-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <p class="kicker">Ciencia de datos en el sector privado · Perfil de industria</p>
+  <h1>Gartner, Inc.</h1>
+  <p class="sub">La firma líder mundial en investigación de mercado y consultoría estratégica en TI — y una fuente de referencia constante para cualquier decisión de datos, arquitectura y proveedores tecnológicos.</p>
+  <div class="chips">
+    <span class="chip">Core Business</span>
+    <span class="chip">Magic Quadrant</span>
+    <span class="chip">Hype Cycle</span>
+    <span class="chip">Funciones ejecutivas</span>
+    <span class="chip">Industrias</span>
+    <span class="chip">Uso en Ciencia de Datos</span>
+  </div>
+  <div class="cover-meta">
+    <span>Fundada en 1979 · Stamford, Connecticut</span>
+    <span>NYSE: IT · S&amp;P 500</span>
+  </div>
+</div>
+
+<div class="toc">
+  <a href="#s1">1. ¿Qué es Gartner?</a>
+  <a href="#s2">2. Core business</a>
+  <a href="#s3">3. Funciones ejecutivas</a>
+  <a href="#s4">4. Industrias</a>
+  <a href="#s5">5. Relevancia para Ciencia de Datos</a>
+  <a href="#s6">6. Glosario rápido</a>
+</div>
+
+<div class="section" id="s1">
+  <div class="section-head"><div class="num">1</div><h2>¿Qué es Gartner?</h2></div>
+  <p>Gartner, Inc. es la empresa líder a nivel mundial en investigación de mercado y consultoría estratégica en tecnología de la información (TI) y gestión empresarial. Fundada en 1979 por Gideon Gartner y con sede en Stamford, Connecticut, cotiza en la Bolsa de Nueva York (NYSE: IT) y forma parte del índice S&amp;P 500.</p>
+  <div class="callout"><b>Para efectos del curso, piensa en Gartner como un tercero independiente</b> que evalúa proveedores y tecnologías — el mismo rol que cumple un comité ejecutivo cuando prioriza iniciativas con AHP: comparar opciones con criterios explícitos antes de decidir.</div>
+</div>
+
+<div class="section" id="s2">
+  <div class="section-head"><div class="num">2</div><h2>Core business (núcleo de negocio)</h2></div>
+  <p>El negocio principal de Gartner es la provisión de análisis objetivo e investigación sindicada basada en suscripción, para guiar la toma de decisiones críticas de líderes corporativos (C-level). Se articula en tres grandes pilares:</p>
+  <table>
+    <tr><th style="width:24%">Pilar</th><th>Qué incluye</th></tr>
+    <tr><td><b>Investigación (Research / Insights)</b><br><span style="font-size:12px;color:#5B6B84;">~80% de los ingresos</span></td><td>Estudios de mercado, evaluaciones comparativas y asesoramiento estratégico independiente. Incluye tres metodologías que son estándares globales de la industria: el <b>Magic Quadrant</b>, el <b>Hype Cycle</b> y <b>Peer Insights</b> (ver sección 6).</td></tr>
+    <tr><td><b>Consultoría (Gartner Consulting)</b></td><td>Servicios a medida para grandes organizaciones y entidades públicas, orientados a optimizar presupuestos tecnológicos, seleccionar software/proveedores y ejecutar transformaciones digitales complejas.</td></tr>
+    <tr><td><b>Conferencias (Conferences)</b></td><td>Eventos masivos y foros ejecutivos de alto nivel (como el Gartner IT Symposium/Xpo) que reúnen a CIOs, CTOs, directores generales y proveedores tecnológicos.</td></tr>
+  </table>
+</div>
+
+<div class="section" id="s3">
+  <div class="section-head"><div class="num">3</div><h2>¿A qué funciones ejecutivas se dirige?</h2></div>
+  <p>Aunque históricamente Gartner se centró de manera exclusiva en el área de TI (apuntando al CIO y al CTO), con los años se expandió a todas las áreas de la alta dirección:</p>
+  <div>
+    <span class="tag">Finanzas (CFO)</span>
+    <span class="tag">Recursos Humanos (CHRO)</span>
+    <span class="tag">Cadena de Suministro (Supply Chain Leaders)</span>
+    <span class="tag">Marketing y Ventas (CMO / CSO)</span>
+    <span class="tag">Legal, Riesgo y Cumplimiento</span>
+  </div>
+</div>
+
+<div class="section" id="s4">
+  <div class="section-head"><div class="num">4</div><h2>¿Qué tipo de industrias toca?</h2></div>
+  <p>Gartner no se limita a un sector en particular; atiende a clientes en más de 90 países cubriendo prácticamente todos los sectores económicos:</p>
+  <table>
+    <tr><th style="width:34%">Industria</th><th>Temas típicos que cubre Gartner</th></tr>
+    <tr><td>Banca, Servicios Financieros y Seguros (BFSI)</td><td>Ciberseguridad bancaria, pagos digitales, regulación de datos, IA en crédito y prevención de fraude</td></tr>
+    <tr><td>Retail y Comercio Electrónico</td><td>Arquitecturas omnicanal, optimización de inventarios, analítica de clientes y plataformas de e-commerce</td></tr>
+    <tr><td>Manufactura y Cadena de Suministro</td><td>Automatización industrial, IoT, gemelos digitales y logística resiliente</td></tr>
+    <tr><td>Salud y Ciencias de la Vida (Healthcare / Pharma)</td><td>Expedientes clínicos electrónicos, telemedicina, cumplimiento HIPAA y analítica de datos clínicos</td></tr>
+    <tr><td>Sector Público y Gobierno</td><td>Ciudades inteligentes, gobernanza de datos abiertos, ciberdefensa y modernización de infraestructuras críticas</td></tr>
+    <tr><td>Telecomunicaciones y Medios</td><td>Despliegue de 5G, infraestructura de conectividad, monetización de contenidos e interactividad</td></tr>
+    <tr><td>Energía, Petróleo, Gas y Utilities</td><td>Redes inteligentes (smart grids), analítica predictiva de activos y transición energética</td></tr>
+    <tr><td>Educación Superior</td><td>Plataformas de aprendizaje, sistemas de gestión institucional (ERP/SIS) y retención estudiantil</td></tr>
+    <tr><td>Sector Tecnológico (Proveedores y Startups)</td><td>Empresas de software (SaaS), hardware y servicios en la nube que contratan a Gartner para entender a sus competidores y saber cómo posicionarse frente a los compradores empresariales</td></tr>
+  </table>
+</div>
+
+<div class="section" id="s5">
+  <div class="section-head"><div class="num">5</div><h2>¿Por qué le importa esto a Ciencia de Datos?</h2></div>
+  <p>Gartner no diseña ni entrena modelos, pero es una de las fuentes que más usan los equipos de datos para tomar decisiones informadas de tecnología. Algunas conexiones directas con lo que hemos trabajado en el curso:</p>
+  <div class="gold-callout"><b>Input para el AHP:</b> cuando una empresa compara proveedores de nube, plataformas de BI o herramientas de IA (como en la sección 8 de nuestros casos), la posición en el Magic Quadrant y las reseñas de Peer Insights son insumos objetivos que pueden alimentar directamente los criterios y puntajes de la matriz de comparación pareada.</div>
+  <div class="gold-callout"><b>Contexto para el ROI y el Hype Cycle:</b> antes de justificar la inversión en una tecnología emergente (IA generativa, gemelos digitales, edge computing), el Hype Cycle ayuda a distinguir entre una moda pasajera y una tecnología que ya alcanzó valor comprobado — información clave para calibrar el horizonte de tiempo de cualquier argumento de ROI.</div>
+  <div class="gold-callout"><b>Benchmark de gobierno de datos:</b> los reportes de Gartner sobre gobernanza, cumplimiento y ciberseguridad ofrecen marcos de referencia externos para validar (o cuestionar) las prácticas de gobierno de datos que cada equipo documente en sus casos.</div>
+  <p style="font-size:13.5px;color:#5B6B84;">Recomendación práctica: al investigar una empresa para tu caso, busca si Gartner la ha evaluado (como proveedor) o si la ha citado (como cliente/adoptante) — es una forma rápida de contrastar tu análisis con una fuente externa reconocida por la industria.</p>
+</div>
+
+<div class="section" id="s6">
+  <div class="section-head"><div class="num">6</div><h2>Glosario rápido: las tres metodologías de Gartner</h2></div>
+
+  <h4 style="margin:4px 0 6px;color:var(--accent);font-family:Georgia,serif;font-weight:bold;font-size:15.5px;">Magic Quadrant</h4>
+  <p style="font-size:14px;">Evalúa a proveedores tecnológicos en un mercado específico según dos ejes: su <b>visión estratégica</b> (eje vertical) y su <b>capacidad de ejecución</b> (eje horizontal), ubicándolos en uno de cuatro cuadrantes:</p>
+  <div class="quad-grid">
+    <div class="quad"><h4>Líderes</h4><p>Alta visión y alta ejecución. Dominan el mercado actual y están bien posicionados para el futuro.</p></div>
+    <div class="quad"><h4>Visionarios</h4><p>Alta visión, ejecución aún en desarrollo. Innovan pero todavía no escalan al nivel de los líderes.</p></div>
+    <div class="quad"><h4>Retadores (Challengers)</h4><p>Alta ejecución, visión más limitada. Ejecutan bien en el presente, con menor apuesta de innovación.</p></div>
+    <div class="quad"><h4>Nicho (Niche Players)</h4><p>Enfocados en un segmento específico; buena opción cuando ese nicho coincide con la necesidad real.</p></div>
+  </div>
+
+  <h4 style="margin:20px 0 6px;color:var(--accent);font-family:Georgia,serif;font-weight:bold;font-size:15.5px;">Hype Cycle (Ciclo de sobreexpectación)</h4>
+  <p style="font-size:14px;">Grafica la madurez, adopción comercial y valor real de tecnologías emergentes a lo largo del tiempo, en cinco fases:</p>
+  <div class="hype-chart">
+    <div class="hype-bars">
+      <div class="hype-bar" style="height:35%;"></div>
+      <div class="hype-bar" style="height:95%;"></div>
+      <div class="hype-bar" style="height:15%;"></div>
+      <div class="hype-bar" style="height:50%;"></div>
+      <div class="hype-bar" style="height:70%;"></div>
+    </div>
+    <div class="hype-labels">
+      <span>Disparador de innovación</span>
+      <span>Pico de expectativas infladas</span>
+      <span>Abismo de desilusión</span>
+      <span>Rampa de consolidación</span>
+      <span>Meseta de productividad</span>
+    </div>
+  </div>
+  <p style="font-size:13px;color:#5B6B84;">Útil para calibrar expectativas: una tecnología en el "pico de expectativas infladas" (hoy, buena parte de la IA generativa) suele generar promesas de ROI más altas de lo que la evidencia todavía sostiene.</p>
+
+  <h4 style="margin:20px 0 6px;color:var(--accent);font-family:Georgia,serif;font-weight:bold;font-size:15.5px;">Peer Insights</h4>
+  <p style="font-size:14px;">Plataforma verificada de reseñas y opiniones de software empresarial, escritas directamente por usuarios y compradores reales — el complemento "de campo" al análisis experto del Magic Quadrant.</p>
+</div>
+
+<div class="closing">
+  <h3>Para llevar al siguiente caso</h3>
+  <p>La próxima vez que tu equipo evalúe iniciativas de datos con AHP, prueba enriquecer los criterios de "capacidad de ejecución" o "riesgo/gobierno" con lo que Gartner reporta públicamente sobre esos mismos proveedores — convierte una opinión de equipo en una decisión respaldada por evidencia externa.</p>
+</div>
+
+<p class="footer-note">Perfil elaborado para uso en clase dentro de la serie "Ciencia de datos en el sector privado". Contenido base proporcionado por el docente; las conexiones de la sección 5 y las descripciones del glosario (sección 6) son contexto adicional preparado para el curso.</p>
+
+</div>
+</body>
+</html>
